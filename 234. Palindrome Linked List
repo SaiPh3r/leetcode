@@ -1,0 +1,78 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+
+void reverse(ListNode* &head){
+    ListNode* prev  = NULL;
+    ListNode* current = head;
+
+    while(current!=NULL){
+        ListNode* forward = current->next;
+        current->next = prev;
+        prev = current;
+        current = forward;
+    }
+    head = prev;
+}
+
+int len(ListNode* &head){
+    ListNode* temp = head;
+    int count =0;
+    while(temp!=NULL){
+        count++;
+        temp = temp->next;
+    }
+    return count;
+}
+
+ListNode* midd(ListNode* head){
+    ListNode* slow = head;
+    ListNode* fast = head;
+    while(fast != NULL && fast->next!=NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}
+
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        // approach
+        // len
+        // check if odd or even
+        // then find mid 
+        // if odd mid = mid->next;
+        // then reverse from mid 
+        // then compare
+
+        int l = len(head);
+        ListNode* mid;
+        if(l%2==0){
+            mid = midd(head);
+        }else{
+            mid = midd(head);
+            mid = mid->next;
+        }
+        reverse(mid);
+
+        // now lets compare
+        ListNode* temp = head;
+        while(temp!=NULL && mid!=NULL){
+            if(temp->val != mid->val){
+                return false;
+            }
+            temp = temp->next;
+            mid = mid->next;
+        }
+        return true;
+
+    }
+};
