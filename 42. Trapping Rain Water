@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        // prefix and sufix to fix tle
+        int n=height.size();
+        vector<int>pre(n);
+        vector<int>suf(n);
+
+        pre[0] = height[0];
+        for(int i=1;i<n;i++){
+            pre[i] = max(pre[i-1] , height[i]);
+        }// got pre
+
+        suf[n-1] = height[n-1];
+        for(int i=n-2;i>=0;i--){
+            suf[i] = max(suf[i+1] , height[i]);
+        }// got suf
+
+        int ans=0;
+        for(int i=0;i<n;i++){
+            if(min(pre[i] , suf[i]) - height[i]>0){
+                ans+= min(pre[i] , suf[i]) - height[i];
+            }
+        }
+        return ans;
+
+
+    }
+};
