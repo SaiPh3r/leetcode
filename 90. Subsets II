@@ -1,0 +1,26 @@
+class Solution {
+public:
+    void solve(vector<int>& nums , vector<vector<int>> &ans , int index , vector<int>current){
+        // base case
+        if(index == nums.size()){
+            ans.push_back(current);
+            return;
+        }
+        // pick walla case
+        current.push_back(nums[index]);
+        solve(nums , ans , index+1 , current);
+        // not pick walla case
+        current.pop_back();
+        solve(nums , ans , index+1 , current);
+    }
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> ans;
+        vector<int>c;
+        int i = 0;
+        solve(nums , ans , i , c);
+        set<vector<int>> s(ans.begin(), ans.end());
+        vector<vector<int>> uniqueVec(s.begin(), s.end());
+        return uniqueVec;
+    }
+};
