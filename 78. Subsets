@@ -1,0 +1,24 @@
+class Solution {
+public:
+    void solve(vector<int>& nums , int index , vector<vector<int>>&ans , vector<int>current){
+        // base case
+        if(index == nums.size()){
+            ans.push_back(current);
+            return;
+        }
+        // recursibe call
+        // pick
+        current.push_back(nums[index]);
+        solve(nums , index+1 , ans , current);
+        // jb pick nhi kra
+        current.pop_back();
+        solve(nums , index+1 , ans , current);
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<int>current;
+        vector<vector<int>>ans;
+        int i = 0;
+        solve(nums , i , ans , current);
+        return ans;
+    }
+};
