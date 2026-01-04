@@ -29,3 +29,31 @@ public:
 };
 
 // redone 
+
+class Solution {
+public:
+    void solve(vector<int>& candidates, int i ,int target , vector<int>&current , vector<vector<int>>&ans , int sum  ){
+        // base case
+        if(sum == target){
+            ans.push_back(current);
+            return;
+        }
+        if(sum>target|| i==candidates.size())return;
+
+        //include
+        current.push_back(candidates[i]);
+        solve(candidates , i , target , current , ans , sum+ candidates[i]);
+
+        //exclude
+        current.pop_back();
+        solve(candidates , i+1 , target , current , ans , sum);
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        int i =0;
+        vector<int>current;
+        vector<vector<int>>ans;
+        int sum=0;
+        solve(candidates , i , target , current , ans , sum);
+        return ans;
+    }
+};
