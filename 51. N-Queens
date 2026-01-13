@@ -1,50 +1,53 @@
+
+bool isSafe(int i, int j, int n, vector<string>& board) {
+    // same column check krlo
+    for (int row = 0; row < i; row++) {
+        if (board[row][j] == 'Q')
+            return false;
+    }
+
+    // upper left
+    for (int row = i - 1, column = j - 1 ; row >= 0&& column >= 0;
+         row--, column--) {
+        if (board[row][column] == 'Q')
+            return false;
+    }
+    for (int row = i - 1, column = j + 1; row >= 0 && column < n; row--, column++){
+         if (board[row][column] == 'Q')
+            return false;
+    }
+       
+
+
+return true;
+// isSafe function khtm hua
+}
+
+void solve(int row, int n, vector<string>& board, vector<vector<string>> &res) {
+    // base case
+    if (row == n) {
+        res.push_back(board);
+        return;
+    }
+
+    // ab recursion ka logic
+    for (int col = 0; col < n; col++) {
+        if (isSafe(row, col, n, board)) {
+            // agr safr h to push krle
+            board[row][col] = 'Q';
+            solve(row + 1, n, board, res);
+
+            // backtrack
+            board[row][col] = '.';
+        }
+    }
+}
+
 class Solution {
 public:
-    bool safe(int i, int j, int n, vector<string>& board) {
-
-        // same column
-        for (int row = 0; row < i; row++) {
-            if (board[row][j] == 'Q')
-                return false;
-        }
-
-        // upper-left diagonal
-        for (int row = i - 1, col = j - 1; row >= 0 && col >= 0; row--, col--) {
-            if (board[row][col] == 'Q')
-                return false;
-        }
-
-        // upper-right diagonal
-        for (int row = i - 1, col = j + 1; row >= 0 && col < n; row--, col++) {
-            if (board[row][col] == 'Q')
-                return false;
-        }
-
-        return true;
-    }
-
-    void solve(int row, int n,
-               vector<string>& board,
-               vector<vector<string>>& res) {
-
-        if (row == n) {
-            res.push_back(board);
-            return;
-        }
-
-        for (int col = 0; col < n; col++) {
-            if (safe(row, col, n, board)) {
-                board[row][col] = 'Q';
-                solve(row + 1, n, board, res);
-                board[row][col] = '.';
-            }
-        }
-    }
-
     vector<vector<string>> solveNQueens(int n) {
-        vector<vector<string>> res;
         vector<string> board(n, string(n, '.'));
-
+        vector<vector<string>> res;
         solve(0, n, board, res);
         return res;
     }
