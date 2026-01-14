@@ -1,0 +1,47 @@
+// class Solution {
+//   public:
+//     bool isSafe(vector<vector<int>>&graph , int index , int col , int v  , vector<int>&color){
+//         // mere pass adj graph h graph jisme me check krunga agr index(current vertex adj h kisike aur same coloir h)
+//         for(int i=0;i<v; i++){
+//             if(graph[index][i]== 1){
+//                 // mtlb adjesent h 
+//                 if(color[i] == col){
+//                     return false;
+//                 }
+//             }
+//         }return true;
+//     }
+//     bool solve(vector<vector<int>>&graph , int index , int v ,  vector<int>&color , int m){
+//         // base case
+//         if(index ==v)return true;
+        
+//         // logic
+//         // har color ke lie
+//         for(int col=1;col<=m;col++){
+//             if(isSafe(graph , index , col , v , color)){
+//                 // agr safe h to color assign krdu
+//                 color[index] =col;
+                
+//                 if(solve(graph , index+1, v , color, m)){
+//                     return true;
+//                 }
+//                 // backtrack
+//                 color[index] = 0;// mtlb no color 
+                
+//             }
+//         }
+//         return false;
+//     }
+//     bool graphColoring(int v, vector<vector<int>> &edges, int m) {
+//         vector<vector<int>> graph(v, vector<int>(v, 0));
+//         vector<int> color(v, 0);
+//         for(auto &e : edges){
+//             int u= e[0];
+//             int s = e[1];
+//             graph[u][s] = 1;
+//             graph[s][u]= 1;
+//         }
+//          return solve(graph ,0 ,v , color ,m);
+//     }
+// };
+
