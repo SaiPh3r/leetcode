@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int t[301];
+    bool solve(int index, string s, unordered_set<string>& dict) {
+        // base case
+        if (index == s.size()) {
+            return true;
+        }
+
+        if (t[index] != -1)
+            return t[index];
+        if (dict.find(s) != dict.end())
+            return true;
+
+        for (int l = 1; index + l <= s.size(); l++) {
+            string temp = s.substr(index, l);
+            if (dict.find(temp) != dict.end() && solve(index + l, s, dict))
+                return t[index] = true;
+        }
+        return t[index] = false;
+    }
+    bool wordBreak(string s, vector<string>& wordDict) {
+        memset(t, -1, sizeof(t));
+        unordered_set<string> st;
+        for (int i = 0; i < wordDict.size(); i++) {
+            st.insert(wordDict[i]);
+        }
+
+        return solve(0, s, st);
+    }
+};
+
+
