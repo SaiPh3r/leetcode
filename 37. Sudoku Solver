@@ -1,0 +1,63 @@
+class Solution {
+public:
+    bool solved = false;
+    bool isSafe(vector<vector<char>>& board, int i, int j, char value) {
+        // same row
+        for (int col = 0; col < board[0].size(); col++) {
+            if (board[i][col] == value)
+                return false;
+        }
+        // same col
+        for (int row = 0; row < board.size(); row++) {
+            if (board[row][j] == value)
+                return false;
+        }
+
+        // 3*3 block ka logiv
+        int sr = (i / 3) * 3;
+        int sc = (j / 3) * 3;
+        for (int i = sr; i <= sr + 2; i++) {
+            for (int j = sc; j <= sc + 2; j++) {
+                if (board[i][j] == value)
+                    return false;
+            }
+        }
+
+        return true;
+    }
+    void solve(vector<vector<char>>& board, int i, int j) {
+        if (solved)
+            return;
+        int nextrow = i;
+        int nextcol = j + 1;
+        if (j == 8) {
+            nextrow = i + 1;
+            nextcol = 0;
+        }
+
+        // base case
+        if (i == 9) {
+            solved = true;
+            return;
+        }
+        if (board[i][j] != '.') {
+            solve(board, nextrow, nextcol);
+            return;
+        }
+
+        for (char value = '1'; value <= '9'; value++) {
+            if (isSafe(board, i, j, value)) {
+                board[i][j] = value;
+
+                // recursive call
+                solve(board, nextrow, nextcol);
+                if (solved) return;
+                // backgtrack
+                board[i][j] = '.';
+            }
+        }
+    }
+    void solveSudoku(vector<vector<char>>& board) {
+        solve(board , 0 , 0 );
+    }
+};
